@@ -28,7 +28,7 @@ args[0] = cmd;
 if (fork() == 0)
 {
 execve(args[0], args, NULL);
-perror(args[0]);
+fprintf(stderr, "./shell: No such file or directory\n");
 exit(1);
 }
 else
