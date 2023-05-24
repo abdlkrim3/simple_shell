@@ -18,7 +18,6 @@ int main(void)
 	while (1)
 	{
 		printf("%s", prompt);
-
 		if (fgets(command, sizeof(command), stdin) == NULL)
 		{
 			if (feof(stdin))
@@ -32,9 +31,7 @@ int main(void)
 				exit(EXIT_FAILURE);
 			}
 		}
-
 		command[strcspn(command, "\n")] = '\0';
-
 		char *token = strtok(command, " ");
 		if (token == NULL)
 		{
@@ -42,13 +39,12 @@ int main(void)
 		}
 
 		pid_t pid = fork();
-
 		if (pid < 0)
 		{
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
-		else if (pid == 0) // Child process
+		else if (pid == 0)
 		{
 			if (execlp(token, token, (char *)NULL) == -1)
 			{
@@ -56,7 +52,7 @@ int main(void)
 				exit(EXIT_FAILURE);
 			}
 		}
-		else // Parent process
+		else
 		{
 			int status;
 			waitpid(pid, &status, 0);
@@ -68,6 +64,5 @@ int main(void)
 			printf("Command '%s' not found\n", token);
 		}
 	}
-
-	return 0;
+	return (0);
 }
