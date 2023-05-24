@@ -1,53 +1,40 @@
-#include "shell.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#define MAX_CMD_LEN 1024
+#define PROMPT "#cisfun$ "
 /**
- * simple_shell - simple unix interpreter
- * Return: returns 0 for success
- * @line: user input from getline
- * @argv: array of strings to main
- * @linelen: lenth of user input
- */
-
-int simple_shell(char *line, ssize_t linelen, char **argv)
+* main - simple UNIX command line interpreter
+*
+* Return: 0 on success, 1 on error
+*/
+int main(void)
 {
-	char *token = NULL, *str = NULL;
-	char *my_comm[MAX_ARGS] = {NULL};
-	int i = 0, count = 0, j = 0;
-
-		str = malloc(sizeof(char *) * (linelen + 100));
-		if (str == NULL)
-			return (-1);
-		_strcpy(str, line);
-		token = strtok(line, " ");
-		_strcpy(str, line);
-		while (token != NULL)
-		{
-			count++;
-			token = strtok(NULL, " ");
-		}
-		if (count == 0)
-		{
-			free(str);
-			return (0);
-		}
-		token = strtok(str, " ");
-		while (token != NULL)
-		{
-			my_comm[i] = malloc(sizeof(char) * (_strlen(token) + 100));
-			if (my_comm[i] == NULL)
-			{
-				for (j = 0; j < i; j++)
-					free(my_comm[j]);
-				free(str);
-				return (-1);
-			}
-			_strcpy(my_comm[i], token);
-			token = strtok(NULL, " "), i++;
-		}
-		my_comm[i] = NULL;
-		fork_process(my_comm, argv);
-		for (i = 0; i < count; i++)
-			free(my_comm[i]);
-		free(str);
-		return (0);
+char cmd[MAX_CMD_LEN];
+char *args[] = {NULL, NULL};
+int status;
+while (1)
+{
+printf(PROMPT);
+if (fgets(cmd, MAX_CMD_LEN, stdin) == NULL)
+{
+printf("\n");
+exit(0);
+}
+cmd[strcspn(cmd, "\n")] = '\0';
+args[0] = cmd;
+if (fork() == 0)
+{
+execve(args[0], args, NULL);
+perror(args[0]);
+exit(1);
+}
+else
+{
+wait(&status);
+}
+}
+return (0);
 }
