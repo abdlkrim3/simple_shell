@@ -23,7 +23,7 @@ void file_error(char **argv)
 	_putString(argv[0]);
 	_putString(": No such file or directory\n");
 	/*print_decimal(i);*/
-	/*_putString(": ");*/
-	/*_putString(args[0]);*/
-	/*_putString(": not found\n");*/
+	/*_put_String(": ");*/
+	/*_put_String(args[0]);*/
+	/*_put_String(": not found\n");*/
 }

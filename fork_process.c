@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * fork_process - forks and exectes new process
+ * fork_process - forks and exectes_new_process
  * @argv: array of arguments
  * @args: arg to c
  * Return: 0 on success

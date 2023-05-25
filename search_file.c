@@ -1,8 +1,9 @@
 #include "shell.h"
+
 /**
  * search_file - searches executable file
  * @s: file to search
- * Return: returns path to full or NULL
+ * Return: path to full or NULL
  */
 
 char *search_file(char *s)
